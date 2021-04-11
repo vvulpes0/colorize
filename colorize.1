@@ -1,0 +1,79 @@
+.TH COLORIZE 1 "2021-04-10" "0.1"
+.SH NAME
+colorize \- apply palette map to PGM image
+.SH SYNOPSIS
+.B colorize
+.RB [ -h?\& ]
+.RB [ -m
+.IR map ]
+.B -p
+.I palettes
+.RI [ pnmfile ]
+.
+.SH DESCRIPTION
+This program works only with
+.BR Netpbm (1)
+images.
+.PP
+.B colorize
+constructs a PNM image
+by considering each pixel of
+.I pnmfile
+as a palette index.
+Using the
+.I map
+file, different regions of the base image
+can have separate palettes applied to them.
+In this case, each pixel of the
+.I map
+file indicates a palette number to use in that region.
+.PP
+Only the
+.I palettes
+should be a PPM image.
+If the others have multiple channels,
+then only the information from the red channel is used.
+Attempting to access a palette or an entry that does not exist
+yields a black pixel.
+.
+.SH OPTIONS
+.TP
+.BR -h ", " -?\&
+Show a brief help message and exit.
+.TP
+.BI "-m " map
+A PGM image with
+.I m
+rows and
+.I n
+columns.
+The base image is divided into
+.I m
+regions in the vertical dimension and
+.I n
+regions in the horizontal.
+Each region uses the corresponding pixel of
+.I map
+as an index into the palettes
+to select which palette to use there.
+If
+.I map
+is not provided,
+only the first palette is used.
+.TP
+.BI "-p " palettes
+A PNM image representing palettes, one per row.
+.
+.SH "EXIT STATUS"
+.TP
+.B 0
+Successful program execution
+.TP
+.B ">0"
+An error occurred.
+.
+.SH "SEE ALSO"
+.BR anytopnm (1),
+.BR pnmtopng (1),
+.BR pgm (5),
+.BR ppm (5)
